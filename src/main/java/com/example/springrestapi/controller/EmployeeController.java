@@ -3,6 +3,7 @@ package com.example.springrestapi.controller;
 import com.example.springrestapi.dto.request.ApiResponse;
 import com.example.springrestapi.dto.request.EmployeeSaveRequest;
 import com.example.springrestapi.dto.request.EmployeeUpdateRequest;
+import com.example.springrestapi.dto.response.EmployeeResponse;
 import com.example.springrestapi.entity.Employee;
 import com.example.springrestapi.service.EmployeeService;
 
@@ -26,23 +27,18 @@ public class    EmployeeController {
 
 
     @GetMapping
-    public ApiResponse<List<Employee>> search(){
-        List<Employee> employees = employeeService.findAll();
-        ApiResponse<List<Employee>> apiResponse = new ApiResponse<>();
+    public ApiResponse search(){
+        List<EmployeeResponse> e = employeeService.findAll();
+        ApiResponse apiResponse = new ApiResponse<>();
         apiResponse.setCode(0);
         apiResponse.setMessage("Success");
-        apiResponse.setResult(employees);
+        apiResponse.setResult(e);
         return apiResponse;
     }
     @GetMapping("/{id}")
     public ApiResponse fillByIdEmployee(@PathVariable("id") int id) {
-        Employee employee = employeeService.findById(id);
-        ApiResponse<Employee> apiResponse = new ApiResponse<>();
-//        if (employee == null) {
-//            apiResponse.setCode(-1);
-//            apiResponse.setMessage("Employee not found");
-//            return apiResponse;
-//        }
+        EmployeeResponse employee = employeeService.findById(id);
+        ApiResponse apiResponse = new ApiResponse<>();
         apiResponse.setCode(0);
         apiResponse.setMessage("Success");
         apiResponse.setResult(employee);
@@ -52,12 +48,7 @@ public class    EmployeeController {
     public ApiResponse update(
             @RequestBody EmployeeUpdateRequest request
             ){
-        Employee employee = new Employee();
-        employee.setId(request.getId());
-        employee.setName(request.getName());
-        employee.setAddress(request.getAddress());
-        employee.setPassword(request.getPassword());
-        Employee e = employeeService.update(employee);
+        EmployeeResponse e = employeeService.update(request);
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setCode(0);
         apiResponse.setMessage("Success");
@@ -69,12 +60,7 @@ public class    EmployeeController {
     public ApiResponse save(
             @RequestBody @Valid EmployeeSaveRequest request
     ){
-        Employee employee = new Employee();
-        employee.setUsername(request.getUsername());
-        employee.setName(request.getName());
-        employee.setAddress(request.getAddress());
-        employee.setPassword(request.getPassword());
-        Employee e = employeeService.save(employee);
+        EmployeeResponse e = employeeService.save(request);
 
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setCode(0);

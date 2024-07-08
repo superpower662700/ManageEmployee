@@ -19,19 +19,18 @@ public class logger implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         String method = httpServletRequest.getMethod();
         String uri = httpServletRequest.getRequestURI();
-        String requestBody = StreamUtils.copyToString(servletRequest.getInputStream(), StandardCharsets.UTF_8); // Lấy dữ liệu body
-        log.info("requestBody : " + requestBody);
+//        String requestBody = StreamUtils.copyToString(servletRequest.getInputStream(), StandardCharsets.UTF_8); // Lấy dữ liệu body
         log.info("Request: " + method + " " + uri); // Ghi nhật ký thông tin chi tiết
-//        String idParam = httpServletRequest.getParameter("roleId");
-//        if (idParam != null) {
-//            try {
-//                Integer.parseInt(idParam);
-//            } catch (NumberFormatException e) {
-//                // Trả về phản hồi lỗi
-//                ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "Tham số id không hợp lệ");
-//                return;
-//            }
-//        }
+        String idParam = httpServletRequest.getParameter("id");
+        if (idParam != null) {
+            try {
+                Integer.parseInt(idParam);
+            } catch (NumberFormatException e) {
+                // Trả về phản hồi lỗi
+                ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_BAD_REQUEST, "Tham số id không hợp lệ");
+                return;
+            }
+        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

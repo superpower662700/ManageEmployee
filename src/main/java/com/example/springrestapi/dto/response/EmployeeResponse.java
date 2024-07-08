@@ -1,7 +1,6 @@
-package com.example.springrestapi.dto.request;
+package com.example.springrestapi.dto.response;
 
-import com.example.springrestapi.exception.ErrorCode;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,8 +9,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder // giúp gắn dũ liệu dễ dàng
 @FieldDefaults(level = AccessLevel.PRIVATE) // mặc định các biến được tạo là private
-public class EmployeeSaveRequest {
-    @Size( min = 5 , message = "USERNAME_INVALID")
+public class EmployeeResponse {
+      int id;
      String username;
      String password;
      String name;
